@@ -1,11 +1,20 @@
 import { errorHandler } from "./github-api.helper.ts";
 import { githubApiInstance } from "./github-api.ts";
-import { GithubUser, User } from "./models/user.model.ts";
-import { githubUserToUser } from "./parsers/user.parser.ts";
+import {
+  GetGithubSerachUsersResponse,
+  GithubUser,
+  SearchUser,
+  User,
+} from "./models/user.model.ts";
+import {
+  githubSearchUserToSearchUser,
+  githubUserToUser,
+} from "./parsers/user.parser.ts";
 
 const GITHUB_API_END_POINT = "https://api.github.com";
 
 export default class GithubApiService {
+  // https://docs.github.com/en/rest/users/users#get-a-user
   async getUser(userName: string): Promise<User> {
     const url = `${GITHUB_API_END_POINT}/users/${userName}`;
 
@@ -14,9 +23,19 @@ export default class GithubApiService {
       .catch(errorHandler)) as User;
   }
 
-  async serachUsers(q: string): Promise<any> {
+  // https://docs.github.com/en/rest/search#search-users
+  async serachUsers(q: string): Promise<SearchUser[]> {
     const url = `${GITHUB_API_END_POINT}/search/users?q=${q}`;
 
-    return (await githubApiInstance<any>(url).catch(errorHandler)) as any;
+    return (await githubApiInstance<GetGithubSerachUsersResponse>(url)
+      .then(
+        ({
+          total_count,
+          incomplete_results,
+          items,
+        }: GetGithubSerachUsersResponse) =>
+          items.map(githubSearchUserToSearchUser)
+      )
+      .catch(errorHandler)) as SearchUser[];
   }
 }

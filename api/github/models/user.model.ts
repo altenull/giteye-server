@@ -1,6 +1,6 @@
 import { GithubPlan } from "./plan.model.ts";
 
-export interface GithubUser {
+interface GithubSharedUser {
   login: string; // e.g. "altenull"
   id: number;
   node_id: string;
@@ -19,6 +19,9 @@ export interface GithubUser {
   received_events_url: string; // e.g. "https://api.github.com/users/altenull/received_events"
   type: string; // e.g. "User"
   site_admin: boolean;
+}
+
+export interface GithubUser extends GithubSharedUser {
   name: string | null; // e.g. "Heonyoung Kim"
   company: string | null; // e.g. "Glassdome inc."
   blog: string; // e.g.  "https://altenull.github.io"
@@ -54,4 +57,20 @@ export interface User {
   location?: string;
   email?: string;
   bio?: string;
+}
+
+export interface GithubSearchUser extends GithubSharedUser {
+  score: number; // e.g. 1.0
+}
+
+export interface SearchUser {
+  id: number;
+  login: string;
+  avatar_url: string;
+}
+
+export interface GetGithubSerachUsersResponse {
+  total_count: number;
+  incomplete_results: boolean;
+  items: GithubSearchUser[];
 }

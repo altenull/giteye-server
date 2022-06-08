@@ -1,4 +1,9 @@
-import { GithubUser, User } from "../models/user.model.ts";
+import {
+  GithubSearchUser,
+  GithubUser,
+  SearchUser,
+  User,
+} from "../models/user.model.ts";
 
 export const githubUserToUser = ({
   login,
@@ -25,5 +30,17 @@ export const githubUserToUser = ({
     ...(location != null && { location }),
     ...(email != null && { email }),
     ...(bio != null && { bio }),
+  };
+};
+
+export const githubSearchUserToSearchUser = ({
+  id,
+  login,
+  avatar_url,
+}: GithubSearchUser): SearchUser => {
+  return {
+    id,
+    login,
+    avatar_url,
   };
 };

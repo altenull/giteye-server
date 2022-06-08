@@ -1,5 +1,6 @@
-import GithubApiService from "./github-api.service.ts";
 import { Response } from "https://deno.land/x/oak/mod.ts";
+import GithubApiService from "./github-api.service.ts";
+import { SearchUser, User } from "./models/user.model.ts";
 
 const githubApiService = new GithubApiService();
 
@@ -10,11 +11,11 @@ export const getUser = async ({
   params: { userName: string };
   response: Response;
 }) => {
-  const gitraceUser: any = await githubApiService.getUser(params.userName);
+  const user: User = await githubApiService.getUser(params.userName);
 
-  if (gitraceUser != null) {
+  if (user != null) {
     response.status = 200;
-    response.body = gitraceUser;
+    response.body = user;
   }
 };
 
@@ -25,10 +26,12 @@ export const searchUsers = async ({
   params: { q: string };
   response: Response;
 }) => {
-  const serachUsersResult: any = await githubApiService.serachUsers(params.q);
+  const searchUsers: SearchUser[] = await githubApiService.serachUsers(
+    params.q
+  );
 
-  if (serachUsersResult != null) {
+  if (searchUsers != null) {
     response.status = 200;
-    response.body = serachUsersResult;
+    response.body = searchUsers;
   }
 };
