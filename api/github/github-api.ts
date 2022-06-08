@@ -1,6 +1,7 @@
 const getGithubApiRequestHeaders = () => {
   const requestHeaders = new Headers();
 
+  // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#current-version
   requestHeaders.append("Accept", "application/vnd.github.v3+json");
   requestHeaders.append(
     "Authorization",
