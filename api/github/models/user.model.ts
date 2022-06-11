@@ -68,9 +68,3 @@ export interface SearchUser {
   login: string;
   avatar_url: string;
 }
-
-export interface GetGithubSerachUsersResponse {
-  total_count: number;
-  incomplete_results: boolean;
-  items: GithubSearchUser[];
-}
