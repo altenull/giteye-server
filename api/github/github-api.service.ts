@@ -1,7 +1,7 @@
 import { errorHandler } from "./github-api.helper.ts";
 import { githubApiInstance } from "./github-api.ts";
-import { GetGithubSerachUsersResponse } from "./models/user-api.model";
 import { GithubUser, SearchUser, User } from "./models/user.model.ts";
+import { GetGithubSerachUsersResponse } from "./models/user-api.model.ts";
 import {
   githubSearchUserToSearchUser,
   githubUserToUser,
