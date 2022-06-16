@@ -1,5 +1,6 @@
 import { green, yellow } from "https://deno.land/std@0.142.0/fmt/colors.ts";
 import { Application } from "https://deno.land/x/oak/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import "https://deno.land/x/dotenv/load.ts";
 import router from "./api/router.ts";
 
@@ -10,6 +11,7 @@ const url: string = `${LOCALHOST}:${PORT}`;
 
 const app = new Application();
 
+app.use(oakCors({ origin: "*" }));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
