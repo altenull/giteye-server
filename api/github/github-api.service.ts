@@ -8,7 +8,7 @@ import {
   githubSearchUserToSearchUser,
   githubUserToUser,
 } from "./parsers/user.parser.ts";
-import { Repo } from "./models/repo.model";
+import { Repo } from "./models/repo.model.ts";
 
 const GITHUB_API_END_POINT = "https://api.github.com";
 
