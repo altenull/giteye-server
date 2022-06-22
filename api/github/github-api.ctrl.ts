@@ -1,7 +1,7 @@
 import { Response } from "https://deno.land/x/oak/mod.ts";
 import GithubApiService from "./github-api.service.ts";
 import { SearchUser, User } from "./models/user.model.ts";
-import { GithubRepo } from "./models/repo.model.ts";
+import { Repo } from "./models/repo.model.ts";
 
 const githubApiService = new GithubApiService();
 
@@ -44,7 +44,7 @@ export const getRepos = async ({
   params: { userName: string };
   response: Response;
 }) => {
-  const repos: GithubRepo[] = await githubApiService.getRepos(params.userName);
+  const repos: Repo[] = await githubApiService.getRepos(params.userName);
 
   if (repos != null) {
     response.status = 200;
