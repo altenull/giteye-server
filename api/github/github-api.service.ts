@@ -2,10 +2,13 @@ import { errorHandler } from "./github-api.helper.ts";
 import { githubApiInstance } from "./github-api.ts";
 import { GithubUser, SearchUser, User } from "./models/user.model.ts";
 import { GetGithubSerachUsersResponse } from "./models/user-api.model.ts";
+import { GithubRepo, Repo } from "./models/repo.model.ts";
+import { githubRepoToRepo } from "./parsers/repo.parser.ts";
 import {
   githubSearchUserToSearchUser,
   githubUserToUser,
 } from "./parsers/user.parser.ts";
+import { Repo } from "./models/repo.model";
 
 const GITHUB_API_END_POINT = "https://api.github.com";
 
@@ -33,5 +36,14 @@ export default class GithubApiService {
           items.map(githubSearchUserToSearchUser)
       )
       .catch(errorHandler)) as SearchUser[];
+  }
+
+  // https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user
+  async getRepos(userName: string): Promise<Repo[]> {
+    const url = `${GITHUB_API_END_POINT}/users/${userName}/repos`;
+
+    return (await githubApiInstance<GithubRepo[]>(url)
+      .then((data: GithubRepo[]) => data.map(githubRepoToRepo))
+      .catch(errorHandler)) as Repo[];
   }
 }

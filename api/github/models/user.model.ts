@@ -1,6 +1,6 @@
 import { GithubPlan } from "./plan.model.ts";
 
-interface GithubSharedUser {
+export interface GithubSharedUser {
   login: string; // e.g. "altenull"
   id: number;
   node_id: string;
