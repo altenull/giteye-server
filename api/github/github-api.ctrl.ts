@@ -2,6 +2,7 @@ import { Response } from "https://deno.land/x/oak/mod.ts";
 import GithubApiService from "./github-api.service.ts";
 import { SearchUser, User } from "./models/user.model.ts";
 import { Repo } from "./models/repo.model.ts";
+import { Languages } from "./models/languages.model.ts";
 
 const githubApiService = new GithubApiService();
 
@@ -49,5 +50,22 @@ export const getRepos = async ({
   if (repos != null) {
     response.status = 200;
     response.body = repos;
+  }
+};
+export const getLanguages = async ({
+  params,
+  response,
+}: {
+  params: { userName: string; repoName: string };
+  response: Response;
+}) => {
+  const languages: Languages = await githubApiService.getLanguages(
+    params.userName,
+    params.repoName
+  );
+
+  if (languages != null) {
+    response.status = 200;
+    response.body = languages;
   }
 };

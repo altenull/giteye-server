@@ -4,6 +4,7 @@ import { GithubUser, SearchUser, User } from "./models/user.model.ts";
 import { GetGithubSerachUsersResponse } from "./models/user-api.model.ts";
 import { GithubRepo, Repo } from "./models/repo.model.ts";
 import { githubRepoToRepo } from "./parsers/repo.parser.ts";
+import { Languages } from "./models/languages.model.ts";
 import {
   githubSearchUserToSearchUser,
   githubUserToUser,
@@ -44,5 +45,14 @@ export default class GithubApiService {
     return (await githubApiInstance<GithubRepo[]>(url)
       .then((data: GithubRepo[]) => data.map(githubRepoToRepo))
       .catch(errorHandler)) as Repo[];
+  }
+
+  // https://docs.github.com/en/rest/repos/repos#list-repository-languages
+  async getLanguages(userName: string, repoName: string): Promise<Languages> {
+    const url = `${GITHUB_API_END_POINT}/repos/${userName}/${repoName}/languages`;
+
+    return (await githubApiInstance<Languages>(url)
+      .then((data: Languages) => data)
+      .catch(errorHandler)) as Languages;
   }
 }

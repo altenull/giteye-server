@@ -10,4 +10,7 @@ router.get("/search/users/:q", githubApiCtrl.searchUsers);
 // Repo
 router.get("/repos/:userName", githubApiCtrl.getRepos);
 
+// Languages
+router.get("/languages/:userName/:repoName", githubApiCtrl.getLanguages);
+
 export default router;
